@@ -2,17 +2,12 @@
 import { GoogleProvider } from "@lit-protocol/lit-auth-client";
 import { ProviderType } from "@lit-protocol/constants";
 import { useEffect, useState } from "react";
-import {
-  authenticateWithGoogle,
-  getPKPs,
-  mintPKP,
-  redirectToAppropriateUrl,
-} from "../../utils/lit";
-import { litAuthClient } from "../../utils/litConfig";
+import { authenticateWithGoogle, getPKPs, mintPKP } from "../utils/lit";
+import { litAuthClient } from "../utils/litConfig";
 import Image from "next/image";
+import Google from "../public/google.png";
 
 export default function Home() {
-  const redirectUri = redirectToAppropriateUrl();
   const [pkps, setPkps] = useState([
     {
       publicKey: "",
@@ -30,12 +25,15 @@ export default function Home() {
   }
 
   async function handleGoogleLogin() {
+    const redirectUri = "http://localhost:3000";
     setLoading(true);
     await signInWithGoogle(redirectUri);
   }
 
   useEffect(() => {
     async function handleAuthRedirect() {
+      const redirectUri = "http://localhost:3000";
+
       const authMethod = await authenticateWithGoogle(redirectUri);
 
       if (authMethod) {
@@ -66,7 +64,7 @@ export default function Home() {
 
     handleAuthRedirect();
     setLoading(false);
-  }, [redirectUri]);
+  }, []);
 
   return (
     <div className="container">
@@ -87,12 +85,7 @@ export default function Home() {
               }}
             >
               <div className="btn__icon">
-                <Image
-                  src="/google.png"
-                  alt="Google logo"
-                  fill={true}
-                  sizes="10"
-                ></Image>
+                <Image src={Google} alt="Google logo" sizes="10"></Image>
               </div>
               {!loading && <span className="btn__label">Mint PKP</span>}
             </button>
