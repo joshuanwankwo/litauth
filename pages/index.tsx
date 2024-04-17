@@ -2,7 +2,12 @@
 import { GoogleProvider } from "@lit-protocol/lit-auth-client";
 import { ProviderType } from "@lit-protocol/constants";
 import { useEffect, useState } from "react";
-import { authenticateWithGoogle, getPKPs, mintPKP } from "../utils/lit";
+import {
+  authenticateWithGoogle,
+  getPKPs,
+  mintPKP,
+  getRedirectUri,
+} from "../utils/lit";
 import { litAuthClient } from "../utils/litConfig";
 import Image from "next/image";
 import Google from "../public/google.png";
@@ -25,14 +30,14 @@ export default function Home() {
   }
 
   async function handleGoogleLogin() {
-    const redirectUri = "http://localhost:3000";
+    const redirectUri = getRedirectUri();
     setLoading(true);
     await signInWithGoogle(redirectUri);
   }
 
   useEffect(() => {
     async function handleAuthRedirect() {
-      const redirectUri = "http://localhost:3000";
+      const redirectUri = getRedirectUri();
 
       const authMethod = await authenticateWithGoogle(redirectUri);
 

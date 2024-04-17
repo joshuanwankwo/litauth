@@ -60,16 +60,16 @@ export async function mintPKP(authMethod: AuthMethod): Promise<IRelayPKP> {
   return newPKP;
 }
 
-// const redirectUri = () => {
-//   const hostname = window.location.hostname;
-//   const onLocalhost = hostname === "localhost" || hostname === "127.0.0.1";
+export const getRedirectUri = () => {
+  const hostname = window.location.hostname;
+  const onLocalhost = hostname === "localhost" || hostname === "127.0.0.1";
 
-//   // Check if running on localhost
-//   if (onLocalhost) {
-//     // Redirect to localhost:3000
-//     return "http://localhost:3000";
-//   } else {
-//     // Redirect to the home page
-//     return "https://your-deployed-domain.com"; // Change this URL to your domain
-//   }
-// }
+  // Check if running on localhost
+  if (onLocalhost) {
+    // Redirect to localhost:3000
+    return "http://localhost:3000";
+  } else {
+    // Redirect to the deployed home page
+    return "https://litauth.vercel.app/"; 
+  }
+}
